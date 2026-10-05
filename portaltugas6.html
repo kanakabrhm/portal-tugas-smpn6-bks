@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Tugas SMPN 6 Bekasi</title>
+    <!-- FontAwesome & Google Fonts -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0B2363;
+            --primary-light: #153896;
+            --accent: #F5B014;
+            --accent-hover: #d9990d;
+            --bg-light: #f4f6fa;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --danger: #ef4444;
+            --success: #10b981;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* HEADER */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, #06153d 100%);
+            color: white;
+            padding: 1.2rem 1.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .brand-text h1 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            line-height: 1.2;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .brand-text p {
+            font-size: 0.75rem;
+            color: var(--accent);
+            font-weight: 600;
+            margin-top: 2px;
+        }
+
+        .user-nav {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-info {
+            text-align: right;
+        }
+
+        .user-info .name {
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .user-info .role-badge {
+            display: inline-block;
+            font-size: 0.7rem;
+            background: var(--accent);
+            color: #000;
+            padding: 1px 8px;
+            border-radius: 10px;
+            font-weight: 700;
+        }
+
+        .btn-logout {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .btn-logout:hover {
+            background: var(--danger);
+        }
+
+        /* CONTAINER */
+        .container {
+            max-width: 1100px;
+            margin: 20px auto;
+            padding: 0 15px;
+            flex: 1;
+            width: 100%;
+        }
+
+        /* AUTH CARD */
+        .auth-container {
+            max-width: 480px;
+            margin: 30px auto;
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border);
+            position: relative;
+        }
+
+        .auth-tabs {
+            display: flex;
+            background: var(--bg-light);
+            padding: 4px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            border-radius: 8px;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: all 0.2s;
+        }
+
+        .auth-tab.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: var(--text-main);
+        }
+
+        .password-wrapper {
+            position: relative;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            outline: none;
+            transition: border 0.2s;
+        }
+
+        .password-wrapper .form-control {
+            padding-right: 40px;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+        }
+
+        /* TAMPILAN KETENTUAN PASSWORD */
+        .password-rules {
+            background: var(--bg-light);
+            padding: 10px 12px;
+            border-radius: 8px;
+            margin-top: 8px;
+            font-size: 0.78rem;
+            border: 1px solid var(--border);
+        }
+
+        .password-rules p {
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 4px;
+        }
+
+        .rule-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-muted);
+            margin-top: 3px;
+            font-weight: 600;
+        }
+
+        .rule-item.valid {
+            color: var(--success);
+        }
+
+        .rule-item.invalid {
+            color: var(--danger);
+        }
+
+        .checkbox-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            background: var(--bg-light);
+            padding: 12px;
+            border-radius: 8px;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .btn {
+            display: inline-block;
+            width: 100%;
+            background: var(--primary);
+            color: white;
+            font-weight: 700;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+            text-align: center;
+            font-size: 0.95rem;
+        }
+
+        .btn:hover {
+            background: var(--primary-light);
+        }
+
+        .btn-accent {
+            background: var(--accent);
+            color: #000;
+        }
+
+        .btn-accent:hover {
+            background: var(--accent-hover);
+        }
+
+        .btn-danger {
+            background: var(--danger);
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
+        /* POPUP BANNER NOTIFIKASI */
+        .popAlert {
+            margin-top: 15px;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .popAlert.success {
+            background-color: #d1fae5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+        }
+
+        .popAlert.error {
+            background-color: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fca5a5;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* DASHBOARD LAYOUT */
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+            border: 1px solid var(--border);
+            margin-bottom: 20px;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--bg-light);
+            padding-bottom: 12px;
+            margin-bottom: 16px;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .code-box {
+            background: #eff6ff;
+            border: 2px dashed var(--primary);
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .code-box span {
+            font-family: monospace;
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: 2px;
+        }
+
+        /* GRID TUGAS */
+        .task-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 16px;
+        }
+
+        .task-card {
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 14px;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .task-card .tag {
+            display: inline-block;
+            background: #e0e7ff;
+            color: var(--primary);
+            font-size: 0.7rem;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-bottom: 8px;
+        }
+
+        .task-card h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .task-card p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        .file-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--bg-light);
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--primary);
+            text-decoration: none;
+            margin-bottom: 10px;
+        }
+
+        /* TABLE SUBMISSION */
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+
+        th, td {
+            padding: 10px 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background: var(--bg-light);
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .badge-status {
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+
+        .badge-pending {
+            background: #fef3c7;
+            color: #d97706;
+        }
+
+        .badge-done {
+            background: #d1fae5;
+            color: #059669;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* MODAL */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            max-width: 450px;
+            width: 90%;
+        }
+
+        footer {
+            text-align: center;
+            padding: 15px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border);
+            background: white;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="brand">
+            <div class="brand-text">
+                <h1><i class="fa-solid fa-graduation-cap" style="color:var(--accent);"></i> PORTAL TUGAS</h1>
+                <p>SMP NEGERI 6 KOTA BEKASI</p>
+            </div>
+        </div>
+        <div class="user-nav hidden" id="userNav">
+            <div class="user-info">
+                <div class="name" id="navUserName">Nama User</div>
+                <span class="role-badge" id="navUserRole">Role</span>
+            </div>
+            <button class="btn-logout" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Keluar</button>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- AUTENTIKASI (LOGIN & DAFTAR) -->
+        <div id="authSection" class="auth-container">
+            <div class="auth-tabs">
+                <div class="auth-tab active" id="tabLogin" onclick="switchAuthMode('login')">Masuk</div>
+                <div class="auth-tab" id="tabRegister" onclick="switchAuthMode('register')">Daftar Akun</div>
+            </div>
+
+            <!-- FORM LOGIN -->
+            <form id="formLogin" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label>Nama Lengkap</label>
+                    <input type="text" id="loginName" class="form-control" placeholder="Masukkan nama..." required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="loginPassword" class="form-control" placeholder="Masukkan password..." required>
+                        <i class="fa-solid fa-eye toggle-password" onclick="togglePasswordVisibility('loginPassword', this)"></i>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Masuk Sebagai</label>
+                    <select id="loginRole" class="form-control" required>
+                        <option value="murid">Murid (Siswa)</option>
+                        <option value="guru">Guru</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn">Masuk ke Portal</button>
+            </form>
+
+            <!-- FORM DAFTAR -->
+            <form id="formRegister" class="hidden" onsubmit="handleRegister(event)">
+                <div class="form-group">
+                    <label>Nama Lengkap</label>
+                    <input type="text" id="regName" class="form-control" placeholder="Nama lengkap..." required>
+                </div>
+                <div class="form-group">
+                    <label>Password Akun Baru</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="regPassword" class="form-control" placeholder="Buat password..." oninput="validatePasswordRules()" required>
+                        <i class="fa-solid fa-eye toggle-password" onclick="togglePasswordVisibility('regPassword', this)"></i>
+                    </div>
+                    
+                    <!-- BOX KETENTUAN PASSWORD -->
+                    <div class="password-rules">
+                        <p><i class="fa-solid fa-shield-halved"></i> Ketentuan Password:</p>
+                        <div class="rule-item" id="ruleLength"><i class="fa-solid fa-circle-xmark"></i> Minimal 6 Karakter</div>
+                        <div class="rule-item" id="ruleUpper"><i class="fa-solid fa-circle-xmark"></i> Minimal 1 Huruf Besar (A-Z)</div>
+                        <div class="rule-item" id="ruleNumber"><i class="fa-solid fa-circle-xmark"></i> Minimal 1 Angka (0-9)</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Daftar Sebagai</label>
+                    <select id="regRole" class="form-control" onchange="toggleRegFields()" required>
+                        <option value="murid">Murid (Siswa)</option>
+                        <option value="guru">Guru</option>
+                    </select>
+                </div>
+
+                <!-- KHUSUS MURID: PILIHAN KELAS -->
+                <div id="fieldKelas" class="form-group">
+                    <label>Pilih Kelas</label>
+                    <select id="regKelas" class="form-control"></select>
+                </div>
+
+                <!-- KHUSUS GURU: MAPEL MULTI SELECT -->
+                <div id="fieldMapel" class="form-group hidden">
+                    <label>Mata Pelajaran yang Diampu (Bisa Pilih >1)</label>
+                    <div class="checkbox-grid">
+                        <label class="checkbox-item"><input type="checkbox" name="mapel" value="PAI"> PAI</label>
+                        <label class="checkbox-item"><input type="checkbox" name="mapel" value="IPA"> IPA</label>
+                        <label class="checkbox-item"><input type="checkbox" name="mapel" value="IPS"> IPS</label>
+                        <label class="checkbox-item"><input type="checkbox" name="mapel" value="B. Indo"> B. Indo</label>
+                        <label class="checkbox-item"><input type="checkbox" name="mapel" value="B. Inggris"> B. Inggris</label>
+                        <label class="checkbox-item"><input type="checkbox" name="mapel" value="B. Sunda"> B. Sunda</label>
+                        <label class="checkbox-item"><input type="checkbox" name="mapel" value="SBD"> SBD</label>
+                        <label class="checkbox-item"><input type="checkbox" name="mapel" value="PPKn"> PPKn</label>
+                        <label class="checkbox-item"><input type="checkbox" name="mapel" value="MTK"> MTK</label>
+                        <label class="checkbox-item"><input type="checkbox" name="mapel" value="TIK"> TIK</label>
+                        <label class="checkbox-item"><input type="checkbox" name="mapel" value="PJOK"> PJOK</label>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-accent">Buat Akun Baru</button>
+            </form>
+
+            <!-- POPUP NOTIFIKASI LOGIN/DAFTAR -->
+            <div id="popAlert" class="popAlert hidden"></div>
+        </div>
+
+        <!-- DASHBOARD GURU -->
+        <div id="guruDashboard" class="hidden">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title"><i class="fa-solid fa-address-card"></i> Profil & Kode Guru</div>
+                </div>
+                <div class="code-box">
+                    <p style="font-size:0.85rem; color:#64748b; font-weight:600;">KODE GURU ANDA (BERIKAN KE MURID):</p>
+                    <span id="displayTeacherCode">GURU-000</span>
+                </div>
+                <p><strong>Mengampu Mapel:</strong> <span id="displayTeacherSubjects">-</span></p>
+            </div>
+
+            <!-- FORM BUAT TUGAS -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title"><i class="fa-solid fa-pen-to-square"></i> Buat / Bagikan Tugas Baru</div>
+                </div>
+                <form onsubmit="handleCreateTask(event)">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
+                        <div class="form-group">
+                            <label>Mata Pelajaran</label>
+                            <select id="taskMapelSelect" class="form-control" required></select>
+                        </div>
+                        <div class="form-group">
+                            <label>Target Kelas</label>
+                            <select id="taskTargetKelas" class="form-control" required></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Judul / Nama Tugas</label>
+                        <input type="text" id="taskTitle" class="form-control" placeholder="Contoh: Latihan Soal Bab 1" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Deskripsi / Petunjuk Tugas</label>
+                        <textarea id="taskDesc" class="form-control" rows="2" placeholder="Tuliskan petunjuk pengerjaan..." required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Lampirkan Berkas/Soal Guru (PDF, Word, Excel, PPT, JPEG)</label>
+                        <input type="file" id="taskFile" class="form-control">
+                    </div>
+                    <button type="submit" class="btn"><i class="fa-solid fa-paper-plane"></i> Kirim Tugas ke Kelas</button>
+                    <!-- POPUP NOTIFIKASI TUGAS GURU -->
+                    <div id="guruTaskAlert" class="popAlert hidden"></div>
+                </form>
+            </div>
+
+            <!-- DAFTAR PENGUMPULAN SISWA -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title"><i class="fa-solid fa-inbox"></i> Daftar Tugas Masuk dari Siswa</div>
+                </div>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Siswa / Kelas</th>
+                                <th>Mata Pelajaran</th>
+                                <th>Judul Tugas</th>
+                                <th>Berkas Siswa</th>
+                                <th>Nilai</th>
+                                <th>Aksi / Penilaian</th>
+                            </tr>
+                        </thead>
+                        <tbody id="guruSubmissionsTable"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- DASHBOARD MURID -->
+        <div id="muridDashboard" class="hidden">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title"><i class="fa-solid fa-book-bookmark"></i> Tugas Sekolah untuk Kelas Anda (<span id="displayMuridKelas">-</span>)</div>
+                </div>
+                <div class="task-grid" id="muridTaskList"></div>
+            </div>
+
+            <!-- FORM KUMPULKAN TUGAS MURID -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title"><i class="fa-solid fa-upload"></i> Kumpulkan Tugas Baru</div>
+                </div>
+                <form onsubmit="handleSubmitAssignment(event)">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
+                        <div class="form-group">
+                            <label>Masukkan Kode Guru Tujuan</label>
+                            <input type="text" id="subTeacherCode" class="form-control" placeholder="Contoh: DENI-MTK" oninput="verifyTeacherCode()" required>
+                            <small id="teacherCodeStatus" style="font-size:0.75rem; font-weight:700; color:var(--danger);"></small>
+                        </div>
+                        <div class="form-group">
+                            <label>Pilih Mata Pelajaran</label>
+                            <select id="subMapel" class="form-control" required>
+                                <option value="">-- Masukkan Kode Guru Dulu --</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Judul / Nama Tugas</label>
+                        <input type="text" id="subTitle" class="form-control" placeholder="Contoh: Latihan Bab 1 Aljabar" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Upload File Tugas (Word, Excel, PPT, PDF, JPEG)</label>
+                        <input type="file" id="subFile" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-accent"><i class="fa-solid fa-cloud-arrow-up"></i> Upload Tugas Sekarang</button>
+                    <!-- POPUP NOTIFIKASI UPLOAD TUGAS MURID -->
+                    <div id="muridSubAlert" class="popAlert hidden"></div>
+                </form>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title"><i class="fa-solid fa-clock-rotate-left"></i> Status & Nilai Tugas Saya</div>
+                </div>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Guru Tujuan</th>
+                                <th>Mapel</th>
+                                <th>Judul Tugas</th>
+                                <th>Nilai</th>
+                                <th>Tanggapan / Kritik Guru</th>
+                            </tr>
+                        </thead>
+                        <tbody id="muridHistoryTable"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- MODAL PENILAIAN -->
+    <div id="gradeModal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h3 style="margin-bottom:12px; color:var(--primary);"><i class="fa-solid fa-star"></i> Beri Nilai & Tanggapan</h3>
+            <form onsubmit="saveGrade(event)">
+                <input type="hidden" id="gradeSubId">
+                <div class="form-group">
+                    <label>Nilai (0 - 100)</label>
+                    <input type="number" id="gradeInput" class="form-control" min="0" max="100" required>
+                </div>
+                <div class="form-group">
+                    <label>Kritik / Saran / Tanggapan Guru</label>
+                    <textarea id="feedbackInput" class="form-control" rows="3" placeholder="Tulis masukan untuk siswa..."></textarea>
+                </div>
+                <div style="display:flex; gap:10px;">
+                    <button type="button" class="btn btn-danger" onclick="closeGradeModal()">Batal</button>
+                    <button type="submit" class="btn">Simpan Nilai</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 SMPN 6 Kota Bekasi - Portal Tugas Terpadu</p>
+    </footer>
+
+    <!-- SCRIPT LOGIKA APLIKASI -->
+    <script>
+        // DATA PENGGUNA AWAL (AKUN CONTOH FIKTIF)
+        let users = JSON.parse(localStorage.getItem('smp6_users')) || [
+            { name: "Pak Deni", password: "Password123", role: "guru", code: "DENI-MTK", mapel: ["MTK"] },
+            { name: "Bu Cinta", password: "Password123", role: "guru", code: "CINTA-INDO", mapel: ["B. Indo"] },
+            { name: "Rangga", password: "Password123", role: "murid", kelas: "7A" }
+        ];
+
+        let tasks = JSON.parse(localStorage.getItem('smp6_tasks')) || [];
+        let submissions = JSON.parse(localStorage.getItem('smp6_submissions')) || [];
+        let currentUser = null;
+
+        // LIST TARGET KELAS LENGKAP
+        const targetKelasList = [
+            "Semua Kelas 7",
+            "Semua kelas 8",
+            "Semua kelas 9",
+            "7A", "7B", "7C", "7D", "7E", "7F", "7G", "7H", "7I",
+            "8A", "8B", "8C", "8D", "8E", "8F", "8G", "8H", "8I", "8J", "8K",
+            "9A", "9B", "9C", "9D", "9E", "9F", "9G"
+        ];
+
+        function initKelasOptions() {
+            const selectReg = document.getElementById('regKelas');
+            selectReg.innerHTML = '';
+            
+            // Opsi untuk pendaftaran murid (hanya kelas spesifik)
+            targetKelasList.slice(3).forEach(k => {
+                selectReg.innerHTML += `<option value="${k}">${k}</option>`;
+            });
+
+            // Opsi untuk target kelas pada form pembuat tugas guru
+            const selectTarget = document.getElementById('taskTargetKelas');
+            selectTarget.innerHTML = '';
+            targetKelasList.forEach(k => {
+                selectTarget.innerHTML += `<option value="${k}">${k}</option>`;
+            });
+        }
+
+        // TAMPILKAN ATAU SEMBUNYIKAN PASSWORD
+        function togglePasswordVisibility(inputId, icon) {
+            const input = document.getElementById(inputId);
+            if (input.type === "password") {
+                input.type = "text";
+                icon.classList.remove("fa-eye");
+                icon.classList.add("fa-eye-slash");
+            } else {
+                input.type = "password";
+                icon.classList.remove("fa-eye-slash");
+                icon.classList.add("fa-eye");
+            }
+        }
+
+        // VALIDASI ATURAN PASSWORD SECARA REALTIME
+        function validatePasswordRules() {
+            const password = document.getElementById('regPassword').value;
+
+            const ruleLength = document.getElementById('ruleLength');
+            const ruleUpper = document.getElementById('ruleUpper');
+            const ruleNumber = document.getElementById('ruleNumber');
+
+            const isLengthValid = password.length >= 6;
+            const isUpperValid = /[A-Z]/.test(password);
+            const isNumberValid = /[0-9]/.test(password);
+
+            updateRuleUI(ruleLength, isLengthValid, "Minimal 6 Karakter");
+            updateRuleUI(ruleUpper, isUpperValid, "Minimal 1 Huruf Besar (A-Z)");
+            updateRuleUI(ruleNumber, isNumberValid, "Minimal 1 Angka (0-9)");
+
+            return isLengthValid && isUpperValid && isNumberValid;
+        }
+
+        function updateRuleUI(element, isValid, text) {
+            if (isValid) {
+                element.className = "rule-item valid";
+                element.innerHTML = `<i class="fa-solid fa-circle-check"></i> ${text}`;
+            } else {
+                element.className = "rule-item invalid";
+                element.innerHTML = `<i class="fa-solid fa-circle-xmark"></i> ${text}`;
+            }
+        }
+
+        // FUNGSI UMUM TAMPILKAN POPUP NOTIFIKASI
+        function showAlert(elementId, message, isSuccess) {
+            const alertBox = document.getElementById(elementId);
+            alertBox.classList.remove('hidden', 'success', 'error');
+            
+            if (isSuccess) {
+                alertBox.classList.add('success');
+                alertBox.innerHTML = `<i class="fa-solid fa-circle-check"></i> <span>${message}</span>`;
+            } else {
+                alertBox.classList.add('error');
+                alertBox.innerHTML = `<i class="fa-solid fa-circle-xmark"></i> <span>${message}</span>`;
+            }
+        }
+
+        function hideAlert(elementId) {
+            const alertBox = document.getElementById(elementId);
+            alertBox.classList.add('hidden');
+        }
+
+        function switchAuthMode(mode) {
+            hideAlert('popAlert');
+            if(mode === 'login') {
+                document.getElementById('tabLogin').classList.add('active');
+                document.getElementById('tabRegister').classList.remove('active');
+                document.getElementById('formLogin').classList.remove('hidden');
+                document.getElementById('formRegister').classList.add('hidden');
+            } else {
+                document.getElementById('tabRegister').classList.add('active');
+                document.getElementById('tabLogin').classList.remove('active');
+                document.getElementById('formRegister').classList.remove('hidden');
+                document.getElementById('formLogin').classList.add('hidden');
+            }
+        }
+
+        function toggleRegFields() {
+            const role = document.getElementById('regRole').value;
+            if(role === 'guru') {
+                document.getElementById('fieldKelas').classList.add('hidden');
+                document.getElementById('fieldMapel').classList.remove('hidden');
+            } else {
+                document.getElementById('fieldKelas').classList.remove('hidden');
+                document.getElementById('fieldMapel').classList.add('hidden');
+            }
+        }
+
+        function handleRegister(e) {
+            e.preventDefault();
+            hideAlert('popAlert');
+
+            // Cek Kepatuhan Password
+            if(!validatePasswordRules()) {
+                showAlert('popAlert', 'Password belum memenuhi ketentuan! Harap periksa kembali syarat di bawah kolom password.', false);
+                return;
+            }
+
+            const name = document.getElementById('regName').value.trim();
+            const password = document.getElementById('regPassword').value;
+            const role = document.getElementById('regRole').value;
+
+            const existingUser = users.find(u => u.name.toLowerCase() === name.toLowerCase() && u.role === role);
+            if(existingUser) {
+                showAlert('popAlert', 'Nama tersebut sudah terdaftar! Gunakan nama lain.', false);
+                return;
+            }
+
+            if(role === 'guru') {
+                const checkedMapel = Array.from(document.querySelectorAll('input[name="mapel"]:checked')).map(cb => cb.value);
+                if(checkedMapel.length === 0) {
+                    showAlert('popAlert', 'Pilih minimal 1 Mata Pelajaran!', false);
+                    return;
+                }
+                const code = name.toUpperCase().replace(/\s+/g, '') + '-' + checkedMapel[0].toUpperCase().replace(/\s+/g, '');
+                const newUser = { name, password, role, code, mapel: checkedMapel };
+                users.push(newUser);
+                localStorage.setItem('smp6_users', JSON.stringify(users));
+                showAlert('popAlert', `Pendaftaran Guru Berhasil! Kode Guru: ${code}`, true);
+                setTimeout(() => loginUser(newUser), 1200);
+            } else {
+                const kelas = document.getElementById('regKelas').value;
+                const newUser = { name, password, role, kelas };
+                users.push(newUser);
+                localStorage.setItem('smp6_users', JSON.stringify(users));
+                showAlert('popAlert', 'Pendaftaran Murid Berhasil!', true);
+                setTimeout(() => loginUser(newUser), 1200);
+            }
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            hideAlert('popAlert');
+            const name = document.getElementById('loginName').value.trim();
+            const password = document.getElementById('loginPassword').value;
+            const role = document.getElementById('loginRole').value;
+
+            const user = users.find(u => u.name.toLowerCase() === name.toLowerCase() && u.role === role && u.password === password);
+            if(user) {
+                showAlert('popAlert', 'Password benar! Berhasil masuk ke portal...', true);
+                setTimeout(() => {
+                    loginUser(user);
+                }, 1000);
+            } else {
+                showAlert('popAlert', 'Password, Nama, atau Pilihan Role salah!', false);
+            }
+        }
+
+        function loginUser(user) {
+            currentUser = user;
+            hideAlert('popAlert');
+            document.getElementById('authSection').classList.add('hidden');
+            document.getElementById('userNav').classList.remove('hidden');
+            document.getElementById('navUserName').innerText = user.name;
+            document.getElementById('navUserRole').innerText = user.role === 'guru' ? 'GURU' : 'MURID (' + user.kelas + ')';
+
+            if(user.role === 'guru') {
+                document.getElementById('guruDashboard').classList.remove('hidden');
+                document.getElementById('muridDashboard').classList.add('hidden');
+                loadGuruDashboard();
+            } else {
+                document.getElementById('muridDashboard').classList.remove('hidden');
+                document.getElementById('guruDashboard').classList.add('hidden');
+                loadMuridDashboard();
+            }
+        }
+
+        function logout() {
+            currentUser = null;
+            document.getElementById('authSection').classList.remove('hidden');
+            document.getElementById('userNav').classList.add('hidden');
+            document.getElementById('guruDashboard').classList.add('hidden');
+            document.getElementById('muridDashboard').classList.add('hidden');
+        }
+
+        function loadGuruDashboard() {
+            document.getElementById('displayTeacherCode').innerText = currentUser.code;
+            document.getElementById('displayTeacherSubjects').innerText = currentUser.mapel.join(', ');
+
+            const taskMapelSelect = document.getElementById('taskMapelSelect');
+            taskMapelSelect.innerHTML = '';
+            currentUser.mapel.forEach(m => {
+                taskMapelSelect.innerHTML += `<option value="${m}">${m}</option>`;
+            });
+
+            renderGuruSubmissions();
+        }
+
+        function handleCreateTask(e) {
+            e.preventDefault();
+            hideAlert('guruTaskAlert');
+
+            const mapel = document.getElementById('taskMapelSelect').value;
+            const targetKelas = document.getElementById('taskTargetKelas').value;
+            const title = document.getElementById('taskTitle').value;
+            const desc = document.getElementById('taskDesc').value;
+            const fileInput = document.getElementById('taskFile');
+
+            const saveTask = (fileName, fileData) => {
+                const newTask = {
+                    id: Date.now(),
+                    teacherName: currentUser.name,
+                    teacherCode: currentUser.code,
+                    mapel,
+                    targetKelas,
+                    title,
+                    desc,
+                    fileName: fileName || null,
+                    fileData: fileData || null
+                };
+                tasks.push(newTask);
+                localStorage.setItem('smp6_tasks', JSON.stringify(tasks));
+                
+                showAlert('guruTaskAlert', 'Tugas berhasil dikirim dan dipublikasikan ke kelas ' + targetKelas + '!', true);
+                e.target.reset();
+            };
+
+            if(fileInput.files.length > 0) {
+                const file = fileInput.files[0];
+                const reader = new FileReader();
+                reader.onload = function(evt) { saveTask(file.name, evt.target.result); };
+                reader.readAsDataURL(file);
+            } else {
+                saveTask(null, null);
+            }
+        }
+
+        function renderGuruSubmissions() {
+            const table = document.getElementById('guruSubmissionsTable');
+            table.innerHTML = '';
+            const teacherSubs = submissions.filter(s => s.teacherCode === currentUser.code);
+
+            if(teacherSubs.length === 0) {
+                table.innerHTML = '<tr><td colspan="6" style="text-align:center; color:#94a3b8;">Belum ada tugas masuk dari siswa.</td></tr>';
+                return;
+            }
+
+            teacherSubs.forEach(s => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><strong>${s.studentName}</strong><br><small>${s.studentKelas}</small></td>
+                    <td>${s.mapel}</td>
+                    <td>${s.title}</td>
+                    <td><a href="${s.fileData}" download="${s.fileName}" class="file-link"><i class="fa-solid fa-file-arrow-down"></i> ${s.fileName}</a></td>
+                    <td>${s.grade !== null ? `<strong style="color:var(--success); font-size:1rem;">${s.grade}</strong>` : '<span class="badge-status badge-pending">Belum Dinilai</span>'}</td>
+                    <td>
+                        <button class="btn btn-accent" style="padding:4px 8px; font-size:0.75rem;" onclick="openGradeModal(${s.id})"><i class="fa-solid fa-star"></i> Nilai</button>
+                        <button class="btn btn-danger" style="padding:4px 8px; font-size:0.75rem;" onclick="deleteSubmission(${s.id})"><i class="fa-solid fa-trash"></i> Hapus</button>
+                    </td>
+                `;
+                table.appendChild(tr);
+            });
+        }
+
+        function deleteSubmission(id) {
+            if(confirm('Hapus berkas ini dari sistem?')) {
+                submissions = submissions.filter(s => s.id !== id);
+                localStorage.setItem('smp6_submissions', JSON.stringify(submissions));
+                renderGuruSubmissions();
+            }
+        }
+
+        function openGradeModal(id) {
+            const sub = submissions.find(s => s.id === id);
+            if(sub) {
+                document.getElementById('gradeSubId').value = sub.id;
+                document.getElementById('gradeInput').value = sub.grade || '';
+                document.getElementById('feedbackInput').value = sub.feedback || '';
+                document.getElementById('gradeModal').classList.remove('hidden');
+            }
+        }
+
+        function closeGradeModal() {
+            document.getElementById('gradeModal').classList.add('hidden');
+        }
+
+        function saveGrade(e) {
+            e.preventDefault();
+            const id = parseInt(document.getElementById('gradeSubId').value);
+            const grade = parseInt(document.getElementById('gradeInput').value);
+            const feedback = document.getElementById('feedbackInput').value;
+
+            const sub = submissions.find(s => s.id === id);
+            if(sub) {
+                sub.grade = grade;
+                sub.feedback = feedback;
+                localStorage.setItem('smp6_submissions', JSON.stringify(submissions));
+                closeGradeModal();
+                renderGuruSubmissions();
+            }
+        }
+
+        function loadMuridDashboard() {
+            document.getElementById('displayMuridKelas').innerText = currentUser.kelas;
+            renderMuridTasks();
+            renderMuridHistory();
+        }
+
+        function renderMuridTasks() {
+            const list = document.getElementById('muridTaskList');
+            list.innerHTML = '';
+
+            const muridAngkatan = currentUser.kelas.charAt(0);
+            const relevantTasks = tasks.filter(t => {
+                return t.targetKelas === currentUser.kelas || 
+                       t.targetKelas.toLowerCase().includes('semua kelas ' + muridAngkatan) ||
+                       t.targetKelas === 'Semua Kelas';
+            });
+
+            if(relevantTasks.length === 0) {
+                list.innerHTML = '<p style="color:#94a3b8; font-size:0.9rem;">Belum ada tugas khusus untuk kelas Anda.</p>';
+                return;
+            }
+
+            relevantTasks.forEach(t => {
+                const card = document.createElement('div');
+                card.className = 'task-card';
+                card.innerHTML = `
+                    <div>
+                        <span class="tag">${t.mapel} | Target: ${t.targetKelas}</span>
+                        <h4>${t.title}</h4>
+                        <p style="font-size:0.8rem; color:#64748b; font-weight:700;">Guru: ${t.teacherName}</p>
+                        <p>${t.desc}</p>
+                        ${t.fileData ? `<a href="${t.fileData}" download="${t.fileName}" class="file-link"><i class="fa-solid fa-file-pdf"></i> Unduh Soal Guru</a>` : ''}
+                    </div>
+                `;
+                list.appendChild(card);
+            });
+        }
+
+        function verifyTeacherCode() {
+            const code = document.getElementById('subTeacherCode').value.trim().toUpperCase();
+            const status = document.getElementById('teacherCodeStatus');
+            const select = document.getElementById('subMapel');
+            
+            const teacher = users.find(u => u.role === 'guru' && u.code === code);
+            if(teacher) {
+                status.style.color = 'var(--success)';
+                status.innerText = `Guru: ${teacher.name}`;
+                select.innerHTML = '';
+                teacher.mapel.forEach(m => {
+                    select.innerHTML += `<option value="${m}">${m}</option>`;
+                });
+            } else {
+                status.style.color = 'var(--danger)';
+                status.innerText = 'Kode Guru tidak ditemukan!';
+                select.innerHTML = '<option value="">-- Masukkan Kode Guru Dulu --</option>';
+            }
+        }
+
+        function handleSubmitAssignment(e) {
+            e.preventDefault();
+            hideAlert('muridSubAlert');
+
+            const code = document.getElementById('subTeacherCode').value.trim().toUpperCase();
+            const mapel = document.getElementById('subMapel').value;
+            const title = document.getElementById('subTitle').value;
+            const fileInput = document.getElementById('subFile');
+
+            const teacher = users.find(u => u.role === 'guru' && u.code === code);
+            if(!teacher) {
+                showAlert('muridSubAlert', 'Kode Guru tidak ditemukan/salah! Periksa kembali.', false);
+                return;
+            }
+
+            if(fileInput.files.length === 0) {
+                showAlert('muridSubAlert', 'Silakan pilih file tugas Anda terlebih dahulu!', false);
+                return;
+            }
+
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                const newSub = {
+                    id: Date.now(),
+                    studentName: currentUser.name,
+                    studentKelas: currentUser.kelas,
+                    teacherCode: teacher.code,
+                    teacherName: teacher.name,
+                    mapel,
+                    title,
+                    fileName: file.name,
+                    fileData: evt.target.result,
+                    grade: null,
+                    feedback: ''
+                };
+                submissions.push(newSub);
+                localStorage.setItem('smp6_submissions', JSON.stringify(submissions));
+                
+                showAlert('muridSubAlert', 'File tugas berhasil dikirimkan ke ' + teacher.name + '!', true);
+                
+                e.target.reset();
+                document.getElementById('teacherCodeStatus').innerText = '';
+                renderMuridHistory();
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function renderMuridHistory() {
+            const table = document.getElementById('muridHistoryTable');
+            table.innerHTML = '';
+            const mySubs = submissions.filter(s => s.studentName === currentUser.name);
+
+            if(mySubs.length === 0) {
+                table.innerHTML = '<tr><td colspan="5" style="text-align:center; color:#94a3b8;">Belum ada tugas yang dikumpulkan.</td></tr>';
+                return;
+            }
+
+            mySubs.forEach(s => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><strong>${s.teacherName}</strong></td>
+                    <td>${s.mapel}</td>
+                    <td>${s.title}</td>
+                    <td>${s.grade !== null ? `<strong style="color:var(--success); font-size:1.1rem;">${s.grade}</strong>` : '<span class="badge-status badge-pending">Belum Dinilai</span>'}</td>
+                    <td>${s.feedback || '<em style="color:#94a3b8;">Belum ada tanggapan</em>'}</td>
+                `;
+                table.appendChild(tr);
+            });
+        }
+
+        initKelasOptions();
+    </script>
+</body>
+</html>
